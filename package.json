@@ -13,12 +13,17 @@
     "format": "biome format --write ."
   },
   "dependencies": {
+    "@react-three/drei": "^9.114.0",
+    "@react-three/fiber": "^8.17.8",
     "@remix-run/node": "^2.12.1",
     "@remix-run/react": "^2.12.1",
     "@remix-run/serve": "^2.12.1",
+    "@types/three": "^0.168.0",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-svg-pan-zoom": "^3.13.1",
+    "three": "^0.168.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.2",
