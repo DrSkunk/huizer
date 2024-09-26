@@ -32,14 +32,24 @@ export function Wall({ wall }: { wall: WallType }) {
         stroke="white"
         strokeWidth={thickness}
       />
-      {wall.doors.map((door, index) => (
+      {wall.doors.map((door) => (
         <rect
-          key={index}
+          key={`door-${door.position}-${door.width}-${door.height}`}
           x={door.position}
           y={-thickness / 2}
           width={door.width ?? defaults.door.width}
           height={thickness}
           fill="brown"
+        />
+      ))}
+      {wall.windows.map((window) => (
+        <rect
+          key={`window-${window.position.x}-${window.position.y}-${window.width}-${window.height}`}
+          x={window.position.x}
+          y={-thickness / 2}
+          width={window.width ?? defaults.window.width}
+          height={thickness}
+          fill="blue"
         />
       ))}
     </g>

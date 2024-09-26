@@ -29,7 +29,13 @@ export default function Index() {
                 position: 10,
               },
             ],
-            windows: [],
+            windows: [
+              {
+                position: { x: 500, y: 0 },
+                width: 200,
+                height: 100,
+              },
+            ],
           },
           {
             start: { x: 1300, y: 0 },
