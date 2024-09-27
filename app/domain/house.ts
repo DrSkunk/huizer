@@ -86,6 +86,11 @@ export type Outlet = {
   circuitID: string;
 } & PanelItem;
 
+export enum LightSwitchType {
+  SINGLE = "single",
+  DOUBLE = "double",
+}
+
 export type LightSwitch = {
-  circuitID: string;
+  circuitIDs: string[];
 } & PanelItem;
