@@ -10,11 +10,24 @@ export const defaults = {
   wall: {
     thickness: 9,
   },
+  outlet: {
+    amount: 1,
+  },
 };
 
-export type Position = {
+export enum Orientation {
+  HORIZONTAL = "horizontal",
+  VERTICAL = "vertical",
+}
+
+export type PositionXY = {
   x: number;
   y: number;
+};
+
+export type PositionXZ = {
+  x: number;
+  z: number;
 };
 
 // A length is a number with a unit
@@ -24,23 +37,22 @@ export type Length = {
   unit: "m" | "cm" | "mm";
 };
 
+export type House = {
+  floors: Floor[];
+};
+
 export type Floor = {
   name: string;
   walls: Wall[];
 };
 
 export type Wall = {
-  start: Position;
-  end: Position;
+  start: PositionXY;
+  end: PositionXY;
   thickness: number;
   doors: Door[];
   windows: Window[];
-};
-
-export type Window = {
-  position: Position;
-  width?: number;
-  height?: number;
+  outlets: Panel[];
 };
 
 export type Door = {
@@ -49,6 +61,31 @@ export type Door = {
   height?: number;
 };
 
-export type House = {
-  floors: Floor[];
+export type Window = {
+  position: PositionXZ;
+  width?: number;
+  height?: number;
 };
+
+export type Circuit = {
+  name: string;
+  ID: string;
+};
+
+export type Panel = {
+  position: PositionXY;
+  orientation: Orientation;
+  items: PanelItem[];
+};
+
+export type PanelItem = {
+  ID: string;
+};
+
+export type Outlet = {
+  circuitID: string;
+} & PanelItem;
+
+export type LightSwitch = {
+  circuitID: string;
+} & PanelItem;
