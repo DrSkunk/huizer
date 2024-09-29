@@ -14,20 +14,24 @@ export function Panel2D({
   const { position, items } = panel
 
   const rootPositioning = useMemo(() => {
-    let translate = `${position.x},0`
-
-    return `translate(${translate})`
-  }, [position])
+    // Calculate X and Y based on wall angle and position.x
+    const x = position.x * Math.cos((wallAngle * Math.PI) / 180)
+    const y = position.x * Math.sin((wallAngle * Math.PI) / 180)
+    return `translate(${x},${y})`
+  }, [position.x, wallAngle])
 
   const sidePositioning = useMemo(() => {
-    let translate = ''
+    let dx = 0
+    let dy = 0
     if (panel.side === Side.LEFT) {
-      translate = `translate(0,${-wallThickness})`
+      dx = wallThickness * Math.sin((wallAngle * Math.PI) / 180)
+      dy = -wallThickness * Math.cos((wallAngle * Math.PI) / 180)
     } else if (panel.side === Side.RIGHT) {
-      translate = `translate(0,${wallThickness})`
+      dx = -wallThickness * Math.sin((wallAngle * Math.PI) / 180)
+      dy = wallThickness * Math.cos((wallAngle * Math.PI) / 180)
     }
-    return translate
-  }, [panel.side, wallThickness])
+    return `translate(${dx},${dy})`
+  }, [panel.side, wallThickness, wallAngle])
 
   const sideRotation = useMemo(() => {
     // use wall angle to determine the rotation

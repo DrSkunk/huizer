@@ -59,10 +59,10 @@ function Panels({
 }) {
   // offset is based on the angle and thickness of the wall
   const wallAngle = useMemo(
-    () => Math.atan2(wallEnd.y - wallStart.y, wallEnd.x - wallStart.x),
+    () => (Math.atan2(wallEnd.y - wallStart.y, wallEnd.x - wallStart.x) * 180) / Math.PI,
     [wallStart, wallEnd],
   )
-
+  console.log(wallAngle)
   return (
     <>
       {panels.map((panel) => (

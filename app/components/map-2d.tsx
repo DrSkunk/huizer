@@ -6,25 +6,17 @@ export function Map2d({ house }: { house: House }) {
   const viewBox = useMemo(() => {
     // offset with 20cm to make sure the walls are visible
     const offset = 20
-    // get the minimum and maximum x and y values of the walls of all floors
-    const minX =
-      Math.min(
-        ...house.floors.flatMap((floor) => floor.walls.map((wall) => wall.start.x)),
-      ) - offset
-    const minY =
-      Math.min(
-        ...house.floors.flatMap((floor) => floor.walls.map((wall) => wall.start.y)),
-      ) - offset
-    const maxX =
-      Math.max(
-        ...house.floors.flatMap((floor) => floor.walls.map((wall) => wall.start.x)),
-      ) +
-      2 * offset
-    const maxY =
-      Math.max(
-        ...house.floors.flatMap((floor) => floor.walls.map((wall) => wall.start.y)),
-      ) +
-      2 * offset
+
+    // get the minimum and maximum x and y values of the walls of all floors, considering both start and end points
+    const allPoints = house.floors.flatMap((floor) =>
+      floor.walls.flatMap((wall) => [wall.start, wall.end]),
+    )
+
+    const minX = Math.min(...allPoints.map((point) => point.x)) - offset
+    const minY = Math.min(...allPoints.map((point) => point.y)) - offset
+    const maxX = Math.max(...allPoints.map((point) => point.x)) + 2 * offset
+    const maxY = Math.max(...allPoints.map((point) => point.y)) + 2 * offset
+
     return `${minX} ${minY} ${maxX} ${maxY}`
   }, [house])
 

@@ -17,7 +17,7 @@ export default function Index() {
         walls: [
           {
             start: { x: 0, y: 0 },
-            end: { x: 1300, y: 0 },
+            end: { x: 800, y: 800 },
             thickness: 30,
             doors: [
               // {
@@ -52,37 +52,37 @@ export default function Index() {
                 orientation: Orientation.VERTICAL,
                 side: Side.RIGHT,
                 items: [
-                  // {
-                  //   ID: '2',
-                  //   type: PanelItemType.OUTLET,
-                  // },
-                  // {
-                  //   ID: '3',
-                  //   type: PanelItemType.OUTLET,
-                  // },
+                  {
+                    ID: '2',
+                    type: PanelItemType.OUTLET,
+                  },
+                  {
+                    ID: '3',
+                    type: PanelItemType.OUTLET,
+                  },
                 ],
               },
             ],
           },
           {
-            start: { x: 1300, y: 0 },
-            end: { x: 1300, y: 1000 },
+            start: { x: 800, y: 0 },
+            end: { x: 800, y: 800 },
             thickness: 30,
             doors: [],
             windows: [],
             panels: [],
           },
           {
-            start: { x: 1300, y: 1000 },
-            end: { x: 0, y: 1000 },
+            start: { x: 800, y: 800 },
+            end: { x: 0, y: 800 },
             thickness: 30,
             doors: [],
             windows: [],
             panels: [],
           },
           {
-            start: { x: 0, y: 1000 },
-            end: { x: 0, y: 50 },
+            start: { x: 0, y: 800 },
+            end: { x: 0, y: 0 },
             thickness: 30,
             doors: [],
             windows: [],
