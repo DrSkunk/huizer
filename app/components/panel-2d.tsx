@@ -14,25 +14,42 @@ export function Panel2D({
   const { position, items } = panel
 
   const rootPositioning = useMemo(() => {
-    let translate = `${position.x},${position.y}`
-    let rotation: number
+    let translate = `${position.x},0`
 
+    return `translate(${translate})`
+  }, [position])
+
+  const sidePositioning = useMemo(() => {
+    let translate = ''
     if (panel.side === Side.LEFT) {
-      rotation = wallAngle - 90
-    } else {
-      rotation = wallAngle + 90
+      translate = `translate(0,${-wallThickness})`
+    } else if (panel.side === Side.RIGHT) {
+      translate = `translate(0,${wallThickness})`
     }
-    return `translate(${translate}) rotate(${rotation})`
-  }, [position, wallAngle, panel.side])
+    return translate
+  }, [panel.side, wallThickness])
+
+  const sideRotation = useMemo(() => {
+    // use wall angle to determine the rotation
+    let rotate = 0
+    if (panel.side === Side.LEFT) {
+      rotate = wallAngle - 90
+    } else if (panel.side === Side.RIGHT) {
+      rotate = wallAngle + 90
+    }
+    return `rotate(${rotate})`
+  }, [panel.side, wallAngle])
 
   return (
     <g transform={rootPositioning}>
-      <g transform={`translate(${wallThickness / 2},0)`}>
-        {items.map((item, index) => (
-          <g key={item.ID} transform={`translate(${index * 15},0)`}>
-            <PanelItem2D panelItem={item} />
-          </g>
-        ))}
+      <g transform={sidePositioning}>
+        <g className="text-black" transform={sideRotation}>
+          {items.map((item, index) => (
+            <g key={item.ID} transform={`translate(${index * 20},0)`}>
+              <PanelItem2D panelItem={item} />
+            </g>
+          ))}
+        </g>
       </g>
     </g>
   )

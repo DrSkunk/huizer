@@ -41,21 +41,25 @@ export default function Index() {
                     ID: '1',
                     type: PanelItemType.OUTLET,
                   },
-                ],
-              },
-              {
-                position: { x: 600, y: 0 },
-                orientation: Orientation.VERTICAL,
-                side: Side.RIGHT,
-                items: [
                   {
                     ID: '2',
                     type: PanelItemType.OUTLET,
                   },
-                  {
-                    ID: '3',
-                    type: PanelItemType.OUTLET,
-                  },
+                ],
+              },
+              {
+                position: { x: 500, y: 0 },
+                orientation: Orientation.VERTICAL,
+                side: Side.RIGHT,
+                items: [
+                  // {
+                  //   ID: '2',
+                  //   type: PanelItemType.OUTLET,
+                  // },
+                  // {
+                  //   ID: '3',
+                  //   type: PanelItemType.OUTLET,
+                  // },
                 ],
               },
             ],
