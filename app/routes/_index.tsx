@@ -1,10 +1,5 @@
 import type { MetaFunction } from '@remix-run/node'
-import type { House } from '~/domain/house'
-
-import React, { useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Stats, OrbitControls } from '@react-three/drei'
-
+import { Orientation, PanelItemType, Side, type House } from '~/domain/house'
 import { Map2d } from '~/components/map-2d'
 
 export const meta: MetaFunction = () => {
@@ -25,15 +20,39 @@ export default function Index() {
             end: { x: 1300, y: 0 },
             thickness: 30,
             doors: [
-              {
-                position: 10,
-              },
+              // {
+              //   position: 10,
+              // },
             ],
             windows: [
+              // {
+              //   position: { x: 500, z: 0 },
+              //   width: 200,
+              //   height: 100,
+              // },
+            ],
+            panels: [
               {
                 position: { x: 500, y: 0 },
-                width: 200,
-                height: 100,
+                orientation: Orientation.VERTICAL,
+                side: Side.RIGHT,
+                items: [
+                  {
+                    ID: '1',
+                    type: PanelItemType.OUTLET,
+                  },
+                ],
+              },
+              {
+                position: { x: 600, y: 0 },
+                orientation: Orientation.VERTICAL,
+                side: Side.LEFT,
+                items: [
+                  {
+                    ID: '2',
+                    type: PanelItemType.OUTLET,
+                  },
+                ],
               },
             ],
           },
@@ -43,6 +62,7 @@ export default function Index() {
             thickness: 30,
             doors: [],
             windows: [],
+            panels: [],
           },
           {
             start: { x: 1300, y: 1000 },
@@ -50,35 +70,24 @@ export default function Index() {
             thickness: 30,
             doors: [],
             windows: [],
+            panels: [],
           },
           {
             start: { x: 0, y: 1000 },
-            end: { x: 0, y: 0 },
+            end: { x: 0, y: 50 },
             thickness: 30,
             doors: [],
             windows: [],
+            panels: [],
           },
         ],
       },
     ],
   }
 
-  // return <div className="flex h-screen items-center justify-center">hoi</div>
   return (
     <div className="h-screen w-screen">
       <Map2d house={house} />
-      {/* <Canvas>
-        <color attach="background" args={[0.9, 0.9, 0.9]} />
-        <ambientLight intensity={Math.PI / 2} />
-        {house.floors[0].walls.map((wall) => (
-          <Wall
-            key={`${wall.start.x}-${wall.start.y}-${wall.end.x}-${wall.end.y}`}
-            wall={wall}
-          />
-        ))}
-        <OrbitControls />
-        <Stats />
-      </Canvas> */}
     </div>
   )
 }

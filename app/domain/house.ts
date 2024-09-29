@@ -52,7 +52,7 @@ export type Wall = {
   thickness: number;
   doors: Door[];
   windows: Window[];
-  outlets: Panel[];
+  panels: Panel[];
 };
 
 export type Door = {
@@ -72,14 +72,26 @@ export type Circuit = {
   ID: string;
 };
 
+export enum Side {
+  LEFT = "left",
+  RIGHT = "right",
+}
+
 export type Panel = {
   position: PositionXY;
   orientation: Orientation;
+  side: Side;
   items: PanelItem[];
 };
 
+export enum PanelItemType {
+  OUTLET = "outlet",
+  LIGHT_SWITCH = "light-switch",
+}
+
 export type PanelItem = {
   ID: string;
+  type: PanelItemType;
 };
 
 export type Outlet = {

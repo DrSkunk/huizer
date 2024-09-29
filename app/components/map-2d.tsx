@@ -1,5 +1,5 @@
 import type { House } from '~/domain/house'
-import { Wall } from './wall'
+import { Wall2D } from './wall-2d'
 import { useMemo } from 'react'
 
 export function Map2d({ house }: { house: House }) {
@@ -38,7 +38,7 @@ export function Map2d({ house }: { house: House }) {
       viewBox={viewBox}
     >
       {house.floors[0].walls.map((wall) => (
-        <Wall
+        <Wall2D
           key={`${wall.start.x}-${wall.start.y}-${wall.end.x}-${wall.end.y}`}
           wall={wall}
         />
