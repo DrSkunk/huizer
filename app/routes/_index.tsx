@@ -35,7 +35,7 @@ export default function Index() {
               {
                 position: { x: 500, y: 0 },
                 orientation: Orientation.VERTICAL,
-                side: Side.RIGHT,
+                side: Side.LEFT,
                 items: [
                   {
                     ID: '1',
@@ -46,10 +46,14 @@ export default function Index() {
               {
                 position: { x: 600, y: 0 },
                 orientation: Orientation.VERTICAL,
-                side: Side.LEFT,
+                side: Side.RIGHT,
                 items: [
                   {
                     ID: '2',
+                    type: PanelItemType.OUTLET,
+                  },
+                  {
+                    ID: '3',
                     type: PanelItemType.OUTLET,
                   },
                 ],

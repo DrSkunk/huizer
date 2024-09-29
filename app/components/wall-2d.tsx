@@ -58,38 +58,20 @@ function Panels({
   wallThickness: number
 }) {
   // offset is based on the angle and thickness of the wall
-  const offset = useMemo(
-    () => ({
-      left: {
-        x:
-          (Math.sin(Math.atan2(wallEnd.y - wallStart.y, wallEnd.x - wallStart.x)) *
-            wallThickness) /
-          2,
-        y:
-          (-Math.cos(Math.atan2(wallEnd.y - wallStart.y, wallEnd.x - wallStart.x)) *
-            wallThickness) /
-          2,
-      },
-      right: {
-        x:
-          (Math.sin(Math.atan2(wallEnd.y - wallStart.y, wallEnd.x - wallStart.x)) *
-            wallThickness) /
-            2 +
-          wallThickness,
-        y:
-          (-Math.cos(Math.atan2(wallEnd.y - wallStart.y, wallEnd.x - wallStart.x)) *
-            wallThickness) /
-            2 +
-          wallThickness,
-      },
-    }),
-    [wallStart, wallEnd, wallThickness],
+  const wallAngle = useMemo(
+    () => Math.atan2(wallEnd.y - wallStart.y, wallEnd.x - wallStart.x),
+    [wallStart, wallEnd],
   )
 
   return (
     <>
       {panels.map((panel) => (
-        <Panel2D key={panel.position.x} panel={panel} offset={offset} />
+        <Panel2D
+          key={panel.position.x}
+          panel={panel}
+          wallAngle={wallAngle}
+          wallThickness={wallThickness}
+        />
       ))}
     </>
   )

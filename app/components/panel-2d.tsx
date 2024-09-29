@@ -4,25 +4,36 @@ import { useMemo } from 'react'
 
 export function Panel2D({
   panel,
-  offset,
+  wallAngle,
+  wallThickness,
 }: {
   panel: Panel
-  offset: { left: { x: number; y: number }; right: { x: number; y: number } }
+  wallAngle: number
+  wallThickness: number
 }) {
-  const { position, orientation, items } = panel
+  const { position, items } = panel
 
-  const transform = useMemo(() => {
+  const rootPositioning = useMemo(() => {
+    let translate = `${position.x},${position.y}`
+    let rotation: number
+
     if (panel.side === Side.LEFT) {
-      return `translate(${position.x + offset.left.x},${position.y + offset.left.y})`
+      rotation = wallAngle - 90
+    } else {
+      rotation = wallAngle + 90
     }
-    return `translate(${position.x + offset.right.x},${position.y + offset.right.y})`
-  }, [position, offset, panel.side])
+    return `translate(${translate}) rotate(${rotation})`
+  }, [position, wallAngle, panel.side])
 
   return (
-    <g transform={transform}>
-      {items.map((item) => (
-        <PanelItem2D key={item.ID} panelItem={item} />
-      ))}
+    <g transform={rootPositioning}>
+      <g transform={`translate(${wallThickness / 2},0)`}>
+        {items.map((item, index) => (
+          <g key={item.ID} transform={`translate(${index * 15},0)`}>
+            <PanelItem2D panelItem={item} />
+          </g>
+        ))}
+      </g>
     </g>
   )
 }
