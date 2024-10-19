@@ -89,20 +89,18 @@ export enum PanelItemType {
   LIGHT_SWITCH = "light-switch",
 }
 
-export type PanelItem = {
+interface BasePanelItem {
   ID: string;
-  type: PanelItemType;
-};
-
-export type Outlet = {
-  circuitID: string;
-} & PanelItem;
-
-export enum LightSwitchType {
-  SINGLE = "single",
-  DOUBLE = "double",
 }
 
-export type LightSwitch = {
+interface Outlet extends BasePanelItem {
+  type: PanelItemType.OUTLET;
+  amount: number;
+}
+
+interface LightSwitch extends BasePanelItem {
+  type: PanelItemType.LIGHT_SWITCH;
   circuitIDs: string[];
-} & PanelItem;
+}
+
+export type PanelItem = Outlet | LightSwitch;
