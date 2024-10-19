@@ -1,0 +1,202 @@
+{
+  "floors": [
+    {
+      "name": "Ground floor",
+      "walls": [
+        {
+          "start": { "x": 0, "y": 0 },
+          "end": { "x": 1300, "y": 0 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [
+            { "position": { "x": 100, "z": 0 }, "width": 120, "height": 220 },
+            { "position": { "x": 527, "z": 0 }, "width": 270, "height": 220 },
+            { "position": { "x": 950, "z": 0 }, "width": 270, "height": 220 }
+          ],
+          "panels": [
+            {
+              "position": { "x": 500, "y": 0 },
+              "orientation": "vertical",
+              "side": "left",
+              "items": [{ "ID": "1", "type": "outlet" }, { "ID": "2", "type": "outlet" }]
+            },
+            {
+              "position": { "x": 500, "y": 0 },
+              "orientation": "vertical",
+              "side": "right",
+              "items": [{ "ID": "2", "type": "outlet" }, { "ID": "3", "type": "outlet" }]
+            }
+          ]
+        },
+        {
+          "start": { "x": 1300, "y": 0 },
+          "end": { "x": 1300, "y": 1115 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 1300, "y": 1115 },
+          "end": { "x": 900, "y": 1115 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 900, "y": 1115 },
+          "end": { "x": 900, "y": 950 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 900, "y": 950 },
+          "end": { "x": 800, "y": 845 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 800, "y": 845 },
+          "end": { "x": 0, "y": 845 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 0, "y": 845 },
+          "end": { "x": 0, "y": 0 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 1300, "y": 365 },
+          "end": { "x": 1480, "y": 365 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 1480, "y": 365 },
+          "end": { "x": 1548, "y": 420 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 1548, "y": 420 },
+          "end": { "x": 1548, "y": 556 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 1548, "y": 556 },
+          "end": { "x": 1480, "y": 615 },
+          "thickness": 30,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 1300, "y": 615 },
+          "end": { "x": 1480, "y": 615 },
+          "thickness": 30,
+          "doors": [{ "position": 60, "width": 100, "height": 200 }],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 0, "y": 400 },
+          "end": { "x": 875, "y": 400 },
+          "thickness": 14,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 875, "y": 0 },
+          "end": { "x": 875, "y": 490 },
+          "thickness": 14,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 875, "y": 490 },
+          "end": { "x": 803, "y": 490 },
+          "thickness": 14,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 803, "y": 400 },
+          "end": { "x": 803, "y": 490 },
+          "thickness": 14,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 803, "y": 490 },
+          "end": { "x": 657, "y": 638 },
+          "thickness": 14,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 657, "y": 638 },
+          "end": { "x": 548, "y": 638 },
+          "thickness": 14,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 437, "y": 400 },
+          "end": { "x": 437, "y": 845 },
+          "thickness": 14,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 301, "y": 0 },
+          "end": { "x": 301, "y": 400 },
+          "thickness": 9,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 657, "y": 400 },
+          "end": { "x": 657, "y": 638 },
+          "thickness": 9,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        },
+        {
+          "start": { "x": 548, "y": 400 },
+          "end": { "x": 548, "y": 638 },
+          "thickness": 9,
+          "doors": [],
+          "windows": [],
+          "panels": []
+        }
+      ]
+    }
+  ]
+}
