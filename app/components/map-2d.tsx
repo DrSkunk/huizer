@@ -4,8 +4,8 @@ import { useMemo } from 'react'
 
 export function Map2d({ house }: { house: House }) {
   const viewBox = useMemo(() => {
-    // offset with 20cm to make sure the walls are visible
-    const offset = 20
+    // offset with 50cm to make sure the walls are visible
+    const offset = 50
 
     // get the minimum and maximum x and y values of the walls of all floors, considering both start and end points
     const allPoints = house.floors.flatMap((floor) =>
