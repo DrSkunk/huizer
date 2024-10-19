@@ -1,6 +1,6 @@
 import type { MetaFunction } from '@remix-run/node'
-import { Orientation, PanelItemType, Side, type House } from '~/domain/house'
 import { Map2d } from '~/components/map-2d'
+import { useLocalStorage } from '~/hooks/useLocalStorage'
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,87 +10,10 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  const house: House = {
-    floors: [
-      {
-        name: 'Ground floor',
-        walls: [
-          {
-            start: { x: 0, y: 0 },
-            end: { x: 800, y: 800 },
-            thickness: 30,
-            doors: [
-              // {
-              //   position: 10,
-              // },
-            ],
-            windows: [
-              // {
-              //   position: { x: 500, z: 0 },
-              //   width: 200,
-              //   height: 100,
-              // },
-            ],
-            panels: [
-              {
-                position: { x: 500, y: 0 },
-                orientation: Orientation.VERTICAL,
-                side: Side.LEFT,
-                items: [
-                  {
-                    ID: '1',
-                    type: PanelItemType.OUTLET,
-                  },
-                  {
-                    ID: '2',
-                    type: PanelItemType.OUTLET,
-                  },
-                ],
-              },
-              {
-                position: { x: 500, y: 0 },
-                orientation: Orientation.VERTICAL,
-                side: Side.RIGHT,
-                items: [
-                  {
-                    ID: '2',
-                    type: PanelItemType.OUTLET,
-                  },
-                  {
-                    ID: '3',
-                    type: PanelItemType.OUTLET,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            start: { x: 800, y: 0 },
-            end: { x: 800, y: 800 },
-            thickness: 30,
-            doors: [],
-            windows: [],
-            panels: [],
-          },
-          {
-            start: { x: 800, y: 800 },
-            end: { x: 0, y: 800 },
-            thickness: 30,
-            doors: [],
-            windows: [],
-            panels: [],
-          },
-          {
-            start: { x: 0, y: 800 },
-            end: { x: 0, y: 0 },
-            thickness: 30,
-            doors: [],
-            windows: [],
-            panels: [],
-          },
-        ],
-      },
-    ],
+  const { house } = useLocalStorage()
+
+  if (house === null) {
+    return <div>Loading...</div>
   }
 
   return (
