@@ -1,5 +1,5 @@
 import { defaults, PanelItemType, type PanelItem } from '~/domain/house'
-import { Outlet } from './symbols/outlet'
+import { Outlet } from '../symbols/outlet'
 
 export function PanelItem2D({ panelItem }: { panelItem: PanelItem }) {
   switch (panelItem.type) {
