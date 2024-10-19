@@ -1,6 +1,9 @@
 import type { MetaFunction } from '@remix-run/node'
-import { Map2d } from '~/components/map-2d'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
+import { useOutletContext } from '@remix-run/react'
+import { LoadFile } from '~/components/load-file'
+import { Map2d } from '~/components/map-2d/map-2d'
+import { SaveFile } from '~/components/save-file'
+import type { House } from '~/domain/house'
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,14 +13,23 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  const { house } = useLocalStorage()
+  const [house] = useOutletContext() as [
+    House,
+    React.Dispatch<React.SetStateAction<House>>,
+  ]
 
   if (house === null) {
     return <div>Loading...</div>
   }
 
+  console.log('house', house)
+
   return (
     <div className="h-screen w-screen">
+      <div className="flex gap-4">
+        <LoadFile />
+        <SaveFile />
+      </div>
       <Map2d house={house} />
     </div>
   )
