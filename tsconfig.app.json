@@ -9,7 +9,7 @@
   ],
   "exclude": ["app/domain/**/*.ts", "app/domain/**/*.tsx"],
   "compilerOptions": {
-    "lib": ["ES2022"],
+    "lib": ["ES2022", "dom"],
     "types": [],
     "isolatedModules": true,
     "esModuleInterop": true,
