@@ -2,6 +2,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/reac
 import type { LinksFunction } from '@remix-run/node'
 
 import './tailwind.css'
+import { useLocalStorage } from './hooks/useLocalStorage'
 
 export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -35,5 +36,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />
+  const { house, setHouse } = useLocalStorage()
+  return <Outlet context={[house, setHouse]} />
 }
