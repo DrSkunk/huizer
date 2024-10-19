@@ -121,6 +121,10 @@ export type Wall = z.infer<typeof WallSchema>;
 export type Floor = z.infer<typeof FloorSchema>;
 export type House = z.infer<typeof HouseSchema>;
 
+export function parseHouseSchema(house: unknown) {
+  return HouseSchema.parse(house);
+}
+
 export const defaultHouse: House = {
   floors: [
     {
