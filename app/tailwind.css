@@ -1,6 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@variant hocus (&:hover, &:focus);
+
+@theme {
+  --font-family-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 
 html,
 body {
@@ -10,5 +15,3 @@ body {
     color-scheme: dark;
   }
 }
-
-@variant hocus (&:hover, &:focus);
