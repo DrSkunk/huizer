@@ -294,6 +294,79 @@ export function Grid() {
         <rect width="100%" height="100%" fill="white" />
         <rect width="100%" height="100%" fill="url(#grid)" />
 
+        {/* Legend */}
+        <g>
+          <rect
+            x={0}
+            y={0}
+            width={width}
+            height={height * 2}
+            fill="white"
+            stroke="black"
+            strokeWidth="1"
+          />
+
+          {/* top to bottom line */}
+          <line
+            x1={width / 2}
+            y1={0}
+            x2={width / 2}
+            y2={height * 2}
+            stroke="black"
+            strokeWidth="2"
+            markerStart="url(#arrow)"
+            markerEnd="url(#arrow)"
+          />
+          <text x={width / 2 + 5} y={10} textAnchor="start" fontSize=".6em">
+            boven
+          </text>
+          <text x={width / 2 - 5} y={height * 2 - 5} textAnchor="end" fontSize=".6em">
+            onder
+          </text>
+          {/* diagonal line top left to bottom right */}
+          <line
+            x1={0}
+            y1={height / 2}
+            x2={width}
+            y2={height * 1.5}
+            stroke="black"
+            strokeWidth="2"
+            markerStart="url(#arrow)"
+            markerEnd="url(#arrow)"
+          />
+          <g transform={`translate(${width - 10},${height * 1.5 + 10})`}>
+            <text textAnchor="end" fontSize=".6em" transform={`rotate(${angle})`}>
+              rechts
+            </text>
+          </g>
+          <g transform={`translate(${5},${height / 2 - 5})`}>
+            <text textAnchor="start" fontSize=".6em" transform={`rotate(${angle})`}>
+              links
+            </text>
+          </g>
+          {/* diagonal line top right to bottom left */}
+          <line
+            x1={width}
+            y1={height / 2}
+            x2={0}
+            y2={height * 1.5}
+            stroke="black"
+            strokeWidth="2"
+            markerStart="url(#arrow)"
+            markerEnd="url(#arrow)"
+          />
+          <g transform={`translate(${10},${height * 1.5 - 10})`}>
+            <text textAnchor="start" fontSize=".6em" transform={`rotate(-${angle})`}>
+              voor
+            </text>
+          </g>
+          <g transform={`translate(${width - 5},${height / 2 + 15})`}>
+            <text textAnchor="end" fontSize=".6em" transform={`rotate(-${angle})`}>
+              achter
+            </text>
+          </g>
+        </g>
+
         {/* Draw all edges on the grid */}
         {coordinates.map((coordinate, index) => (
           <g key={index}>
