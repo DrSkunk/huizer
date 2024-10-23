@@ -69,7 +69,7 @@ function calculateLabelOffset(edge: Edge, nextEdge: Edge) {
       return { x: 0, y: 0 }
     }
     if (nextEdge.direction === Direction.UP) {
-      return { x: 0, y: 0 }
+      return { x: -15, y: 0 }
     }
     if (nextEdge.direction === Direction.DOWN) {
       return { x: 0, y: 0 }
@@ -161,8 +161,6 @@ export function EdgesAndNodes({
   let lastX = startX
   let lastY = startY
 
-  const filteredEdges = edgeList.filter((edge) => edge.distance > 0)
-
   const nodeCoordinates: {
     node: Node
     x: number
@@ -173,12 +171,21 @@ export function EdgesAndNodes({
     }
   }[] = []
 
-  // Calculate coordinates for drawing edges and labeling nodes
-  const coordinates = filteredEdges.map((edge, index) => {
+  const edgeCoordinates: {
+    from: Edge
+    to: Edge
+    x1: number
+    y1: number
+    x2: number
+    y2: number
+  }[] = []
+
+  // iterate over edgeList
+  for (const [index, edge] of edgeList.entries()) {
     let x = lastX
     let y = lastY
 
-    const nextEdge = filteredEdges?.[index + 1]
+    const nextEdge = edgeList?.[index + 1]
 
     let labelOffset = calculateLabelOffset(edge, nextEdge)
 
@@ -201,38 +208,41 @@ export function EdgesAndNodes({
     }
 
     // Store the coordinates for the current node
-    nodeCoordinates.push({
-      node: nodes[edge.to],
-      x,
-      y,
-      labelOffset,
-    })
-
-    const coords = {
-      from: edge.from,
-      to: edge.to,
-      x1: lastX,
-      y1: lastY,
-      x2: x,
-      y2: y,
+    if (nodes[edge.to].label !== '') {
+      nodeCoordinates.push({
+        node: nodes[edge.to],
+        x,
+        y,
+        labelOffset,
+      })
     }
 
+    if (edge.distance > 0) {
+      const coords = {
+        from: edge,
+        to: edge,
+        x1: lastX,
+        y1: lastY,
+        x2: x,
+        y2: y,
+      }
+
+      edgeCoordinates.push(coords)
+    }
     // Move the lastX, lastY for the next iteration
     lastX = x
     lastY = y
-
-    return coords
-  })
+  }
 
   return (
     <>
-      {coordinates.map((coordinate, index) => (
+      {edgeCoordinates.map((coordinates, index) => (
         <g key={index}>
           <line
-            x1={coordinate.x1}
-            y1={coordinate.y1}
-            x2={coordinate.x2}
-            y2={coordinate.y2}
+            x1={coordinates.x1}
+            y1={coordinates.y1}
+            x2={coordinates.x2}
+            y2={coordinates.y2}
             stroke="black"
             strokeWidth="6"
             strokeLinecap="round"
