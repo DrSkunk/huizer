@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Direction, type Edge, type Node } from '~/domain/gas'
 import { Node as NodeElement } from './node'
 
@@ -155,89 +156,95 @@ export function EdgesAndNodes({
   nodes,
   startCoordinates,
 }: EdgesProps) {
-  const startX = startCoordinates.x
-  const startY = startCoordinates.y
+  const { nodeCoordinates, edgeCoordinates } = useMemo(() => {
+    const startX = startCoordinates.x
+    const startY = startCoordinates.y
 
-  let lastX = startX
-  let lastY = startY
+    let lastX = startX
+    let lastY = startY
 
-  const nodeCoordinates: {
-    node: Node
-    x: number
-    y: number
-    labelOffset: {
+    const nodeCoordinates: {
+      node: Node
       x: number
       y: number
-    }
-  }[] = []
+      labelOffset: {
+        x: number
+        y: number
+      }
+    }[] = []
 
-  const edgeCoordinates: {
-    from: Edge
-    to: Edge
-    x1: number
-    y1: number
-    x2: number
-    y2: number
-  }[] = []
+    const edgeCoordinates: {
+      from: Edge
+      to: Edge
+      x1: number
+      y1: number
+      x2: number
+      y2: number
+    }[] = []
 
-  // iterate over edgeList
-  for (const [index, edge] of edgeList.entries()) {
-    let x = lastX
-    let y = lastY
+    for (const [index, edge] of edgeList.entries()) {
+      let x = lastX
+      let y = lastY
 
-    const nextEdge = edgeList?.[index + 1]
+      const nextEdge = edgeList?.[index + 1]
 
-    let labelOffset = calculateLabelOffset(edge, nextEdge)
+      let labelOffset = calculateLabelOffset(edge, nextEdge)
 
-    if (edge.direction === Direction.LEFT) {
-      x -= width
-      y -= height
-    } else if (edge.direction === Direction.RIGHT) {
-      x += width
-      y += height
-    } else if (edge.direction === Direction.UP) {
-      y -= height * 2
-    } else if (edge.direction === Direction.DOWN) {
-      y += height * 2
-    } else if (edge.direction === Direction.FRONT) {
-      x -= width
-      y += height
-    } else if (edge.direction === Direction.BEHIND) {
-      x += width
-      y += height
-    }
-
-    // Store the coordinates for the current node
-    if (nodes[edge.to].label !== '') {
-      nodeCoordinates.push({
-        node: nodes[edge.to],
-        x,
-        y,
-        labelOffset,
-      })
-    }
-
-    if (edge.distance > 0) {
-      const coords = {
-        from: edge,
-        to: edge,
-        x1: lastX,
-        y1: lastY,
-        x2: x,
-        y2: y,
+      if (edge.direction === Direction.LEFT) {
+        x -= width
+        y -= height
+      } else if (edge.direction === Direction.RIGHT) {
+        x += width
+        y += height
+      } else if (edge.direction === Direction.UP) {
+        y -= height * 2
+      } else if (edge.direction === Direction.DOWN) {
+        y += height * 2
+      } else if (edge.direction === Direction.FRONT) {
+        x -= width
+        y += height
+      } else if (edge.direction === Direction.BEHIND) {
+        x += width
+        y += height
       }
 
-      edgeCoordinates.push(coords)
+      // Store the coordinates for the current node
+      if (nodes[edge.to].label !== '') {
+        nodeCoordinates.push({
+          node: nodes[edge.to],
+          x,
+          y,
+          labelOffset,
+        })
+      }
+
+      // Edges are only drawn when the distance is nonzero
+      // but nodes are still shown when there is a label
+      if (edge.distance > 0) {
+        const coords = {
+          from: edge,
+          to: edge,
+          x1: lastX,
+          y1: lastY,
+          x2: x,
+          y2: y,
+        }
+
+        edgeCoordinates.push(coords)
+      }
+
+      // Move the lastX, lastY for the next iteration
+      lastX = x
+      lastY = y
     }
-    // Move the lastX, lastY for the next iteration
-    lastX = x
-    lastY = y
-  }
+
+    return { nodeCoordinates, edgeCoordinates }
+  }, [width, height, edgeList, nodes, startCoordinates])
 
   return (
     <>
-      {edgeCoordinates.map((coordinates, index) => (
-        <g key={index}>
+      {edgeCoordinates.map((coordinates) => (
+        <g key={`${coordinates.from.toString()}-${coordinates.to.toString()}`}>
           <line
             x1={coordinates.x1}
             y1={coordinates.y1}
@@ -249,8 +256,11 @@ export function EdgesAndNodes({
           />
         </g>
       ))}
-      {nodeCoordinates.map((coordinates, index) => (
-        <NodeElement key={`node-${index}`} coordinates={coordinates} />
+      {nodeCoordinates.map((coordinates) => (
+        <NodeElement
+          key={coordinates.node.label + coordinates.node.type}
+          coordinates={coordinates}
+        />
       ))}
     </>
   )
