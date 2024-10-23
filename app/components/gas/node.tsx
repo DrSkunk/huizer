@@ -21,7 +21,7 @@ export function Node({ coordinates }: NodeProps) {
   // Best to move the calculation of that to here
   const nodeElement = {
     [NodeType.JUNCTION]: <Label label={label} x={labelOffset.x} y={labelOffset.y} />,
-    [NodeType.WALL]: <Wall />,
+    [NodeType.WALL]: <Wall label={label} />,
     [NodeType.MEASURE]: <Measure label={label} angle={angle} />,
     [NodeType.BOILER]: <Boiler />,
     [NodeType.METER]: <Meter />,
@@ -87,8 +87,13 @@ function Valve({ label }: { label: string }) {
   )
 }
 
-function Wall() {
-  return <line x1={0} y1={-100} x2={0} y2={100} stroke="black" strokeWidth="8" />
+function Wall({ label }: { label: string }) {
+  return (
+    <g>
+      <line x1={0} y1={-100} x2={0} y2={100} stroke="black" strokeWidth="8" />
+      <Label label={label} x={18} y={-15} />
+    </g>
+  )
 }
 
 function Measure({ label, angle }: { label: string; angle: number }) {
