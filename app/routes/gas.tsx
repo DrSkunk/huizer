@@ -1,5 +1,5 @@
 import type { MetaFunction } from '@remix-run/node'
-import { Grid } from '~/components/gas/grid'
+import { Total } from '~/components/gas/total'
 
 export const meta: MetaFunction = () => {
   return [
@@ -11,7 +11,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div className="">
-      <Grid />
+      <Total />
     </div>
   )
 }

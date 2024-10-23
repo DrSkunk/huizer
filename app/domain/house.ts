@@ -59,11 +59,6 @@ export const WindowSchema = z.object({
   height: z.number().optional(),
 });
 
-export const CircuitSchema = z.object({
-  name: z.string(),
-  ID: z.string(),
-});
-
 const BasePanelItemSchema = z.object({
   ID: z.string(),
 });
@@ -105,6 +100,27 @@ export const FloorSchema = z.object({
   walls: z.array(WallSchema),
 });
 
+const CircuitSchema = z.object({
+  name: z.string(),
+  ID: z.string(),
+  circuitBreaker: z.number().positive(), // in Amps
+  differential: z.number().positive().optional(), // in mA
+});
+
+// export enum Hoo
+export enum AmountOfPhases {
+  TWO_2P = 2,
+  THREE_3P = 3,
+  FOUR_3PN = 4,
+}
+
+const ElectricalSchema = z.object({
+  amountOfPhases: z.nativeEnum(AmountOfPhases),
+  circuitBreaker: z.number().positive(), // in Amps
+  differential: z.number().positive(), // in mA
+  circuits: z.array(CircuitSchema),
+});
+
 export const HouseSchema = z.object({
   floors: z.array(FloorSchema),
 });
@@ -114,7 +130,6 @@ export type PositionXZ = z.infer<typeof PositionXZSchema>;
 export type Length = z.infer<typeof LengthSchema>;
 export type Door = z.infer<typeof DoorSchema>;
 export type Window = z.infer<typeof WindowSchema>;
-export type Circuit = z.infer<typeof CircuitSchema>;
 export type PanelItem = z.infer<typeof PanelItemSchema>;
 export type Panel = z.infer<typeof PanelSchema>;
 export type Wall = z.infer<typeof WallSchema>;
