@@ -20,7 +20,7 @@ export function Node({ coordinates }: NodeProps) {
   const nodeElement = {
     [NodeType.JUNCTION]: <Label label={label} x={labelOffset.x} y={labelOffset.y} />,
     [NodeType.WALL]: <Wall />,
-    [NodeType.MEASURE]: <Measure angle={angle} />,
+    [NodeType.MEASURE]: <Measure label={label} angle={angle} />,
     [NodeType.BOILER]: null,
     [NodeType.METER]: null,
     [NodeType.VALVE]: null,
@@ -35,12 +35,15 @@ function Wall() {
   return <line x1={0} y1={-100} x2={0} y2={100} stroke="black" strokeWidth="8" />
 }
 
-function Measure({ angle }: { angle: number }) {
+function Measure({ label, angle }: { label: string; angle: number }) {
   return (
-    <g transform={`rotate(${angle})`}>
-      <rect x={-15} y={-5} width={30} height={10} fill="black" />
-      <rect x={-5} y={-10} width={10} height={10} fill="black" />
-      <rect x={-10} y={-22} width={20} height={10} fill="black" />
+    <g>
+      <Label label={label} x={10} y={-35} />
+      <g transform={`rotate(${angle})`}>
+        <rect x={-15} y={-5} width={30} height={10} fill="black" />
+        <rect x={-5} y={-10} width={10} height={10} fill="black" />
+        <rect x={-10} y={-22} width={20} height={10} fill="black" />
+      </g>
     </g>
   )
 }
