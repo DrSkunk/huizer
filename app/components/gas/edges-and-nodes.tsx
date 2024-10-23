@@ -179,6 +179,18 @@ export function EdgesAndNodes({
       }
     }[] = []
 
+    // first node uses the starting coordinates
+    nodeCoordinates.push({
+      node: nodes[edgeList[0].from],
+      x: lastX,
+      y: lastY,
+      angle: 0,
+      labelOffset: {
+        x: 0,
+        y: 0,
+      },
+    })
+
     const edgeCoordinates: {
       from: Edge
       to: Edge
