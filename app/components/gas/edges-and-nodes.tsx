@@ -156,6 +156,11 @@ export function EdgesAndNodes({
   nodes,
   startCoordinates,
 }: EdgesProps) {
+  const baseAngle = useMemo(
+    () => Math.atan2(height, width) * (180 / Math.PI),
+    [height, width],
+  )
+
   const { nodeCoordinates, edgeCoordinates } = useMemo(() => {
     const startX = startCoordinates.x
     const startY = startCoordinates.y
@@ -167,6 +172,7 @@ export function EdgesAndNodes({
       node: Node
       x: number
       y: number
+      angle: number
       labelOffset: {
         x: number
         y: number
@@ -185,7 +191,7 @@ export function EdgesAndNodes({
     for (const [index, edge] of edgeList.entries()) {
       let x = lastX
       let y = lastY
-
+      let angle = 0
       const nextEdge = edgeList?.[index + 1]
 
       let labelOffset = calculateLabelOffset(edge, nextEdge)
@@ -193,9 +199,11 @@ export function EdgesAndNodes({
       if (edge.direction === Direction.LEFT) {
         x -= width
         y -= height
+        angle = baseAngle
       } else if (edge.direction === Direction.RIGHT) {
         x += width
         y += height
+        angle = baseAngle
       } else if (edge.direction === Direction.UP) {
         y -= height * 2
       } else if (edge.direction === Direction.DOWN) {
@@ -203,20 +211,21 @@ export function EdgesAndNodes({
       } else if (edge.direction === Direction.FRONT) {
         x -= width
         y += height
+        angle = -baseAngle
       } else if (edge.direction === Direction.BEHIND) {
         x += width
         y += height
+        angle = -baseAngle
       }
 
       // Store the coordinates for the current node
-      if (nodes[edge.to].label !== '') {
-        nodeCoordinates.push({
-          node: nodes[edge.to],
-          x,
-          y,
-          labelOffset,
-        })
-      }
+      nodeCoordinates.push({
+        node: nodes[edge.to],
+        x,
+        y,
+        angle,
+        labelOffset,
+      })
 
       // Edges are only drawn when the distance is nonzero
       // but nodes are still shown when there is a label
@@ -239,7 +248,7 @@ export function EdgesAndNodes({
     }
 
     return { nodeCoordinates, edgeCoordinates }
-  }, [width, height, edgeList, nodes, startCoordinates])
+  }, [width, height, edgeList, nodes, startCoordinates, baseAngle])
 
   return (
     <>
