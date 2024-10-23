@@ -19,7 +19,7 @@ export function Grid({ width, height }: { width: number; height: number }) {
           <path d={`M 0 0 L 0 ${height}`} stroke="currentcolor" strokeWidth="1" />
         </pattern>
       </defs>
-      <rect width="100%" height="100%" fill="white" />
+      <rect width="100%" height="100%" fill="white" stroke="black" strokeWidth={1} />
       <rect width="100%" height="100%" fill="url(#grid)" />
     </>
   )

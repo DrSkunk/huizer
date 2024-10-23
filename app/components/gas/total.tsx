@@ -34,6 +34,36 @@ export function Total() {
     { from: 9, to: 10, distance: 0, direction: Direction.UP }, // I to boiler
   ]
 
+  const nodesManifest = nodes
+    .filter(
+      (node) =>
+        node.type === NodeType.MEASURE ||
+        node.type === NodeType.WALL ||
+        node.type === NodeType.VALVE,
+    )
+    .map((node) => {
+      if (node.type === NodeType.MEASURE) {
+        return `${node.label}: Meetnippel staal 1"`
+      }
+      if (node.type === NodeType.WALL) {
+        return `${node.label}: Muur 18cm`
+      }
+      if (node.type === NodeType.VALVE) {
+        return `${node.label}: Gaskraan 3/4"`
+      }
+    })
+
+  const edgesManifest = edgeList
+    .filter((edge) => edge.distance > 0)
+    .map((edge) => {
+      const from = nodes[edge.from]
+      const to = nodes[edge.to]
+      // make 450 resolve to 4,5m and 50 to 0.5m
+      const distance = edge.distance / 100
+
+      return `${from.label}${to.label}: ${distance}m PLT DN25 Gasflexibel`
+    })
+
   const startCoordinates = {
     x: 7 * width,
     y: 10 * height,
@@ -47,6 +77,18 @@ export function Total() {
         height: height * 16,
       }}
     >
+      <div className="absolute top-0 right-0 z-10 flex flex-col border bg-white px-2 py-1 font-mono">
+        {nodesManifest.map((node) => (
+          <div key={node} className="text-xs">
+            {node}
+          </div>
+        ))}
+        {edgesManifest.map((connection) => (
+          <div key={connection} className="text-xs">
+            {connection}
+          </div>
+        ))}
+      </div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="isometric-grid absolute h-full w-full bg-white"
