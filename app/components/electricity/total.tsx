@@ -1,12 +1,14 @@
 import type { ElectricalComponent, Electricity, Fuse } from '~/domain/electricity'
 
 const LABEL_TOP_HEIGHT = 30
-const LABEL_BOTTOM_HEIGHT = 30
+const PHASE_LABEL_HEIGHT = 20
+const DESCRIPTION_HEIGHT = 20
 const VERTICAL_SPACING = 20
 const CELL_WIDTH = 50
 const CELL_HEIGHT = 80
 
-const ROW_HEIGHT = LABEL_TOP_HEIGHT + CELL_HEIGHT + LABEL_BOTTOM_HEIGHT
+const ROW_HEIGHT =
+  LABEL_TOP_HEIGHT + CELL_HEIGHT + PHASE_LABEL_HEIGHT + DESCRIPTION_HEIGHT
 
 export function Total({ electricity }: { electricity: Electricity }) {
   const { configuration, rows } = electricity
@@ -108,14 +110,13 @@ function Component({ component }: { component: ElectricalComponent }) {
         />
         {child[component.type]}
       </g>
-      {/* phase */}
       <g transform={`translate(0,${LABEL_TOP_HEIGHT + CELL_HEIGHT})`}>
         {component.phase.map((phase, indexPhase) => (
           <CenterText
             x={CELL_WIDTH * indexPhase}
             y={0}
             width={CELL_WIDTH}
-            height={LABEL_BOTTOM_HEIGHT}
+            height={PHASE_LABEL_HEIGHT}
             key={indexPhase}
             fill="white"
             stroke="black"
@@ -125,6 +126,16 @@ function Component({ component }: { component: ElectricalComponent }) {
           </CenterText>
         ))}
       </g>
+      {/* Description below */}
+      <CenterText
+        x={0}
+        y={LABEL_TOP_HEIGHT + CELL_HEIGHT + PHASE_LABEL_HEIGHT}
+        width={CELL_WIDTH * component.width}
+        height={DESCRIPTION_HEIGHT}
+        fontSize={10}
+      >
+        {component.description}
+      </CenterText>
     </g>
   )
 }
@@ -143,14 +154,34 @@ function FuseComponent({ fuse }: { fuse: Fuse }) {
             width={CELL_WIDTH}
             height={CELL_HEIGHT}
           />
-          <text
-            x={CELL_WIDTH / 2}
-            y={CELL_HEIGHT / 2}
-            dominantBaseline="middle"
-            textAnchor="middle"
+          <circle
+            cx={CELL_WIDTH / 2}
+            cy={10}
+            r={5}
+            stroke="black"
+            fill="none"
+            strokeWidth={1}
+          />
+          <CenterText
+            x={10}
+            y={20}
+            width={CELL_WIDTH - 20}
+            height={CELL_HEIGHT - 40}
+            fontSize={10}
+            fill="none"
+            stroke="black"
+            strokeWidth={1}
           >
             {rating}A
-          </text>
+          </CenterText>
+          <circle
+            cx={CELL_WIDTH / 2}
+            cy={CELL_HEIGHT - 10}
+            r={5}
+            stroke="black"
+            fill="none"
+            strokeWidth={1}
+          />
         </g>
       ))}
     </g>
@@ -160,43 +191,32 @@ function FuseComponent({ fuse }: { fuse: Fuse }) {
 function DifferentialComponent({ component }: { component: ElectricalComponent }) {
   return (
     <g>
-      <rect
-        stroke="black"
-        fill="white"
-        strokeWidth={1}
-        width={CELL_WIDTH * component.width}
-        height={CELL_HEIGHT}
-      />
-      <text
-        x={CELL_WIDTH / 2}
-        y={CELL_HEIGHT / 2}
-        dominantBaseline="middle"
-        textAnchor="middle"
-      >
-        {component.description}
-      </text>
+      <CenterText width={CELL_WIDTH * component.width} height={CELL_HEIGHT}>
+        {component.rating}mA
+      </CenterText>
     </g>
   )
 }
 
 function CenterText({
-  x,
-  y,
+  x = 0,
+  y = 0,
   width,
   height,
   fill = 'none',
   stroke = 'none',
   strokeWidth = 0,
+  fontSize = 15,
   children,
 }: {
-  x: number
-  y: number
+  x?: number
+  y?: number
   width: number
   height: number
   fill?: string
   stroke?: string
   strokeWidth?: number
-
+  fontSize?: number
   children: React.ReactNode
 }) {
   return (
@@ -215,6 +235,7 @@ function CenterText({
         y={y + height / 2}
         dominant-baseline="middle"
         text-anchor="middle"
+        fontSize={fontSize}
       >
         {children}
       </text>
