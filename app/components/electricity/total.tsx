@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { ElectricalComponent, Electricity, Fuse } from '~/domain/electricity'
 
 const LABEL_TOP_HEIGHT = 30
@@ -90,6 +91,8 @@ function Component({ component }: { component: ElectricalComponent }) {
     differential: <DifferentialComponent component={component} />,
   }
 
+  const [description, setDescription] = useState(component.description || '')
+
   return (
     <g>
       <CenterText
@@ -127,21 +130,23 @@ function Component({ component }: { component: ElectricalComponent }) {
         ))}
       </g>
       {/* Description below */}
-      <CenterText
+      <EditableText
         x={0}
         y={LABEL_TOP_HEIGHT + CELL_HEIGHT + PHASE_LABEL_HEIGHT}
         width={CELL_WIDTH * component.width}
         height={DESCRIPTION_HEIGHT}
         fontSize={10}
-      >
-        {component.description}
-      </CenterText>
+        text={description}
+        onTextChange={setDescription}
+      />
     </g>
   )
 }
 
 function FuseComponent({ fuse }: { fuse: Fuse }) {
-  const { width, rating } = fuse
+  const { width } = fuse
+
+  const [rating, setRating] = useState(fuse.rating.toString())
 
   return (
     <g>
@@ -162,7 +167,7 @@ function FuseComponent({ fuse }: { fuse: Fuse }) {
             fill="none"
             strokeWidth={1}
           />
-          <CenterText
+          <EditableText
             x={10}
             y={20}
             width={CELL_WIDTH - 20}
@@ -171,9 +176,10 @@ function FuseComponent({ fuse }: { fuse: Fuse }) {
             fill="none"
             stroke="black"
             strokeWidth={1}
-          >
-            {rating}A
-          </CenterText>
+            text={rating}
+            onTextChange={setRating}
+            suffix="A"
+          />
           <circle
             cx={CELL_WIDTH / 2}
             cy={CELL_HEIGHT - 10}
@@ -189,11 +195,16 @@ function FuseComponent({ fuse }: { fuse: Fuse }) {
 }
 
 function DifferentialComponent({ component }: { component: ElectricalComponent }) {
+  const [rating, setRating] = useState(component.rating.toString())
   return (
     <g>
-      <CenterText width={CELL_WIDTH * component.width} height={CELL_HEIGHT}>
-        {component.rating}mA
-      </CenterText>
+      <EditableText
+        width={CELL_WIDTH * component.width}
+        height={CELL_HEIGHT}
+        text={rating}
+        onTextChange={setRating}
+        suffix="mA"
+      />
     </g>
   )
 }
@@ -239,6 +250,97 @@ function CenterText({
       >
         {children}
       </text>
+    </g>
+  )
+}
+
+function EditableText({
+  x = 0,
+  y = 0,
+  width,
+  height,
+  fill = 'none',
+  stroke = 'none',
+  strokeWidth = 0,
+  fontSize = 15,
+  text,
+  suffix = '',
+  onTextChange,
+}: {
+  x?: number
+  y?: number
+  width: number
+  height: number
+  fill?: string
+  stroke?: string
+  strokeWidth?: number
+  fontSize?: number
+  text: string
+  suffix?: string
+  onTextChange: (value: string) => void
+}) {
+  const [isEditing, setIsEditing] = useState(false)
+  const [inputValue, setInputValue] = useState(text)
+
+  const handleDoubleClick = () => {
+    setIsEditing(true)
+  }
+
+  const handleBlur = () => {
+    setIsEditing(false)
+    onTextChange(inputValue)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      setIsEditing(false)
+      onTextChange(inputValue)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+  }
+
+  return (
+    <g>
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        fill={isEditing ? 'white' : fill}
+        stroke={isEditing ? 'black' : stroke}
+        strokeWidth={isEditing ? '1' : strokeWidth}
+      />
+      {isEditing ? (
+        <foreignObject x={x} y={y} width={width} height={height}>
+          <input
+            className="flex h-full w-full items-center justify-center outline-none"
+            style={{ fontSize: `${fontSize}px` }}
+            value={inputValue}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            onChange={handleChange}
+            // biome-ignore lint/a11y/noAutofocus: Needed to focus after doubleclick
+            autoFocus
+          />
+        </foreignObject>
+      ) : (
+        <text
+          x={x + width / 2}
+          y={y + height / 2}
+          dominantBaseline="middle"
+          textAnchor="middle"
+          fontSize={fontSize}
+          onDoubleClick={handleDoubleClick}
+          className="cursor-pointer select-none"
+        >
+          {text}
+          {suffix}
+        </text>
+      )}
     </g>
   )
 }
