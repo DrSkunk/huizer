@@ -1,11 +1,14 @@
 import { Direction, NodeType } from '~/domain/gas'
+import type { Gas } from '~/domain/gas'
 import { EdgesAndNodes } from './edges-and-nodes'
 import { Grid } from './grid'
 import { Legend } from './legend'
 
-export function Total() {
+export function Total({ gas }: { gas: Gas }) {
   const width = 100
   const height = 50
+
+  // const { nodes, edges } = gas
 
   const nodes = [
     { type: NodeType.METER, label: '' }, // 0 (No label)
@@ -21,7 +24,7 @@ export function Total() {
     { type: NodeType.BOILER, label: '' }, // 10 (No label)
   ]
 
-  const edgeList = [
+  const edges = [
     { from: 0, to: 1, distance: 0, direction: Direction.LEFT }, // 0 to A
     { from: 1, to: 2, distance: 50, direction: Direction.LEFT }, // A to B
     { from: 2, to: 3, distance: 40, direction: Direction.UP }, // B to C
@@ -53,7 +56,7 @@ export function Total() {
       }
     })
 
-  const edgesManifest = edgeList
+  const edgesManifest = edges
     .filter((edge) => edge.distance > 0)
     .map((edge) => {
       const from = nodes[edge.from]
@@ -101,7 +104,7 @@ export function Total() {
         <EdgesAndNodes
           width={width}
           height={height}
-          edgeList={edgeList}
+          edges={edges}
           nodes={nodes}
           startCoordinates={startCoordinates}
         />

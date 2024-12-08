@@ -1,4 +1,4 @@
-import { defaults, PanelItemType, type PanelItem } from '~/domain/house'
+import { defaults, PanelItemType, type PanelItem } from '~/domain/layout'
 import { Outlet } from '../symbols/outlet'
 
 export function PanelItem2D({ panelItem }: { panelItem: PanelItem }) {

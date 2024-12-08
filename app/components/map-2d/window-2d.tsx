@@ -1,4 +1,4 @@
-import type { Window } from '~/domain/house'
+import type { Window } from '~/domain/layout'
 
 export function Window2D({ window }: { window: Window }) {
   const { position, width } = window

@@ -5,7 +5,8 @@ export function useLocalStorage() {
   const [house, setHouse] = useState<null | House>(null)
 
   useEffect(() => {
-    const storedHouse = localStorage.getItem('house')
+    // const storedHouse = localStorage.getItem('house')
+    const storedHouse = null
     if (storedHouse) {
       try {
         const loadedHouse = JSON.parse(storedHouse)

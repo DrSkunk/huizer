@@ -5,7 +5,7 @@ import { Node as NodeElement } from './node'
 interface EdgesProps {
   width: number
   height: number
-  edgeList: Edge[]
+  edges: Edge[]
   nodes: Node[]
   startCoordinates: {
     x: number
@@ -152,7 +152,7 @@ function calculateLabelOffset(edge: Edge, nextEdge: Edge) {
 export function EdgesAndNodes({
   width,
   height,
-  edgeList,
+  edges,
   nodes,
   startCoordinates,
 }: EdgesProps) {
@@ -181,7 +181,8 @@ export function EdgesAndNodes({
 
     // first node uses the starting coordinates
     nodeCoordinates.push({
-      node: nodes[edgeList[0].from],
+      // TODO: review this
+      node: nodes?.[edges[0]?.from] || nodes[0],
       x: lastX,
       y: lastY,
       angle: 0,
@@ -200,11 +201,11 @@ export function EdgesAndNodes({
       y2: number
     }[] = []
 
-    for (const [index, edge] of edgeList.entries()) {
+    for (const [index, edge] of edges.entries()) {
       let x = lastX
       let y = lastY
       let angle = 0
-      const nextEdge = edgeList?.[index + 1]
+      const nextEdge = edges?.[index + 1]
 
       let labelOffset = calculateLabelOffset(edge, nextEdge)
 
@@ -260,7 +261,7 @@ export function EdgesAndNodes({
     }
 
     return { nodeCoordinates, edgeCoordinates }
-  }, [width, height, edgeList, nodes, startCoordinates, baseAngle])
+  }, [width, height, edges, nodes, startCoordinates, baseAngle])
 
   return (
     <>

@@ -1,5 +1,5 @@
-import type { Panel, PositionXY, Wall } from '~/domain/house'
-import { defaults } from '~/domain/house'
+import type { Panel, PositionXY, Wall } from '~/domain/layout'
+import { defaults } from '~/domain/layout'
 import { Panel2D } from './panel-2d'
 import { useMemo } from 'react'
 import { Door2d } from './door-2d'

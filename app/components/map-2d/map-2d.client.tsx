@@ -1,14 +1,14 @@
-import type { House } from '~/domain/house'
+import type { Layout } from '~/domain/layout'
 import { Wall2D } from './wall-2d'
 import { useMemo } from 'react'
 
-export function Map2d({ house }: { house: House }) {
+export function Map2d({ layout }: { layout: Layout }) {
   const viewBox = useMemo(() => {
     // offset with 50cm to make sure the walls are visible
     const offset = 50
 
     // get the minimum and maximum x and y values of the walls of all floors, considering both start and end points
-    const allPoints = house.floors.flatMap((floor) =>
+    const allPoints = layout.floors.flatMap((floor) =>
       floor.walls.flatMap((wall) => [wall.start, wall.end]),
     )
 
@@ -18,7 +18,7 @@ export function Map2d({ house }: { house: House }) {
     const maxY = Math.max(...allPoints.map((point) => point.y)) + 2 * offset
 
     return `${minX} ${minY} ${maxX} ${maxY}`
-  }, [house])
+  }, [layout])
 
   return (
     <svg
@@ -29,7 +29,7 @@ export function Map2d({ house }: { house: House }) {
       className="bg-gray-200"
       viewBox={viewBox}
     >
-      {house.floors[0].walls.map((wall) => (
+      {layout.floors[0].walls.map((wall) => (
         <Wall2D
           key={`${wall.start.x}-${wall.start.y}-${wall.end.x}-${wall.end.y}`}
           wall={wall}

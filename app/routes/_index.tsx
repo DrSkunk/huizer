@@ -1,7 +1,7 @@
 import type { MetaFunction } from '@remix-run/node'
 import { useOutletContext } from '@remix-run/react'
 import { LoadFile } from '~/components/load-file'
-import { Map2d } from '~/components/map-2d/map-2d'
+import { Map2d } from '~/components/map-2d/map-2d.client'
 import { SaveFile } from '~/components/save-file'
 import type { House } from '~/domain/house'
 
@@ -30,7 +30,7 @@ export default function Index() {
         <LoadFile />
         <SaveFile />
       </div>
-      <Map2d house={house} />
+      <Map2d layout={house.layout} />
     </div>
   )
 }

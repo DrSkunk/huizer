@@ -1,4 +1,4 @@
-import { Side, type Panel } from '~/domain/house'
+import { Side, type Panel } from '~/domain/layout'
 import { PanelItem2D } from './panel-item-2d'
 import { useMemo } from 'react'
 

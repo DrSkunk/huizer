@@ -1,5 +1,5 @@
-import type { Door } from '~/domain/house'
-import { defaults } from '~/domain/house'
+import type { Door } from '~/domain/layout'
+import { defaults } from '~/domain/layout'
 
 export function Door2d({ door, wallThickness }: { door: Door; wallThickness: number }) {
   return (
