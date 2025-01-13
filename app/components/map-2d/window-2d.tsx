@@ -1,17 +1,22 @@
-import type { Window } from '~/domain/layout'
+import type { Window } from "~/domain/layout";
+import { Rect } from "react-konva";
 
-export function Window2D({ window }: { window: Window }) {
-  const { position, width } = window
-
+export function Window2D({
+  window,
+  wallThickness,
+}: {
+  window: Window;
+  wallThickness: number;
+}) {
   return (
-    <rect
-      x={position.x}
-      y={0}
-      width={width}
-      height={10}
+    <Rect
+      x={window.position.x}
+      y={-wallThickness / 2}
+      width={window.width}
+      height={wallThickness}
       fill="white"
       stroke="black"
       strokeWidth={1}
     />
-  )
+  );
 }

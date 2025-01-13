@@ -1,35 +1,37 @@
-import { NodeType, type Node as NodeTyping } from '~/domain/gas'
+import { NodeType, type Node as NodeTyping } from "~/domain/gas";
 
 interface NodeProps {
   coordinates: {
-    node: NodeTyping
-    x: number
-    y: number
-    angle: number
+    node: NodeTyping;
+    x: number;
+    y: number;
+    angle: number;
     labelOffset: {
-      x: number
-      y: number
-    }
-  }
+      x: number;
+      y: number;
+    };
+  };
 }
 
 export function Node({ coordinates }: NodeProps) {
-  const { x, y, angle, labelOffset, node } = coordinates
-  const { label, type } = node
+  const { x, y, angle, labelOffset, node } = coordinates;
+  const { label, type } = node;
 
   // TODO: Labeloffset of a node is dependant on incoming and outgoing edge
   // Best to move the calculation of that to here
   const nodeElement = {
-    [NodeType.JUNCTION]: <Label label={label} x={labelOffset.x} y={labelOffset.y} />,
+    [NodeType.JUNCTION]: (
+      <Label label={label} x={labelOffset.x} y={labelOffset.y} />
+    ),
     [NodeType.WALL]: <Wall label={label} />,
     [NodeType.MEASURE]: <Measure label={label} angle={angle} />,
     [NodeType.BOILER]: <Boiler />,
     [NodeType.METER]: <Meter />,
     [NodeType.VALVE]: <Valve label={label} />,
-  }[type]
+  }[type];
 
   if (nodeElement !== null) {
-    return <g transform={`translate(${x},${y})`}>{nodeElement}</g>
+    return <g transform={`translate(${x},${y})`}>{nodeElement}</g>;
   }
 }
 
@@ -49,7 +51,7 @@ function Meter() {
         Teller
       </text>
     </g>
-  )
+  );
 }
 
 function Boiler() {
@@ -73,18 +75,28 @@ function Boiler() {
         </tspan>
       </text>
     </g>
-  )
+  );
 }
 
 function Valve({ label }: { label: string }) {
   // two triangles with their points pointing to eachother
   return (
     <g transform="translate(-15, -15)">
-      <polygon points="0,15 15,0 30,15" fill="white" stroke="black" strokeWidth={3} />
-      <polygon points="0,-15 15,0 30,-15" fill="white" stroke="black" strokeWidth={4} />
+      <polygon
+        points="0,15 15,0 30,15"
+        fill="white"
+        stroke="black"
+        strokeWidth={3}
+      />
+      <polygon
+        points="0,-15 15,0 30,-15"
+        fill="white"
+        stroke="black"
+        strokeWidth={4}
+      />
       <Label label={label} x={-10} y={0} />
     </g>
-  )
+  );
 }
 
 function Wall({ label }: { label: string }) {
@@ -93,7 +105,7 @@ function Wall({ label }: { label: string }) {
       <line x1={0} y1={-100} x2={0} y2={100} stroke="black" strokeWidth="8" />
       <Label label={label} x={18} y={-15} />
     </g>
-  )
+  );
 }
 
 function Measure({ label, angle }: { label: string; angle: number }) {
@@ -106,12 +118,12 @@ function Measure({ label, angle }: { label: string; angle: number }) {
         <rect x={-10} y={-22} width={20} height={10} fill="black" />
       </g>
     </g>
-  )
+  );
 }
 
 function Label({ label, x, y }: { label: string; x: number; y: number }) {
-  if (label === '') {
-    return null
+  if (label === "") {
+    return null;
   }
 
   return (
@@ -129,5 +141,5 @@ function Label({ label, x, y }: { label: string; x: number; y: number }) {
         {label}
       </text>
     </g>
-  )
+  );
 }

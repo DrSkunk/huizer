@@ -1,31 +1,30 @@
-import type { Panel, PositionXY, Wall } from '~/domain/layout'
-import { defaults } from '~/domain/layout'
-import { Panel2D } from './panel-2d'
-import { useMemo } from 'react'
-import { Door2d } from './door-2d'
+import type { Panel, Wall } from "~/domain/layout";
+import { defaults } from "~/domain/layout";
+import { Panel2D } from "./panel-2d";
+import { useMemo } from "react";
+import { Door2d } from "./door-2d";
+import { Group, Line } from "react-konva";
+import { Window2D } from "./window-2d";
 
 export function Wall2D({ wall }: { wall: Wall }) {
-  const { start, end, thickness } = wall
+  const { start, end, thickness } = wall;
 
   const wallAngle = useMemo(
     () => (Math.atan2(end.y - start.y, end.x - start.x) * 180) / Math.PI,
     [start, end],
-  )
+  );
 
   return (
-    <g transform={`translate(${start.x},${start.y})`}>
-      <line
-        x1={0}
-        y1={0}
-        x2={end.x - start.x}
-        y2={end.y - start.y}
-        stroke="currentcolor"
+    <Group x={start.x} y={start.y}>
+      <Line
+        points={[0, 0, end.x - start.x, end.y - start.y]}
+        stroke="#ccc"
         strokeWidth={thickness}
-        strokeLinecap="round"
-        // hover stroke gray
-        className="text-white hover:text-gray-400"
+        lineCap="round"
+        onMouseEnter={(e) => e.target.stroke("#9ca3af")}
+        onMouseLeave={(e) => e.target.stroke("#ccc")}
       />
-      <g transform={`rotate(${wallAngle})`}>
+      <Group rotation={wallAngle}>
         {wall.doors.map((door) => (
           <Door2d
             key={`door-${door.position}-${door.width}-${door.height}`}
@@ -34,27 +33,24 @@ export function Wall2D({ wall }: { wall: Wall }) {
           />
         ))}
         {wall.windows.map((window) => (
-          <rect
+          <Window2D
             key={`window-${window.position.x}-${window.position.z}-${window.width}-${window.height}`}
-            x={window.position.x}
-            y={-thickness / 2}
-            width={window.width ?? defaults.window.width}
-            height={thickness}
-            fill="blue"
+            window={window}
+            wallThickness={thickness}
           />
         ))}
         <Panels panels={wall.panels} wallThickness={thickness} />
-      </g>
-    </g>
-  )
+      </Group>
+    </Group>
+  );
 }
 
 function Panels({
   panels,
   wallThickness,
 }: {
-  panels: Panel[]
-  wallThickness: number
+  panels: Panel[];
+  wallThickness: number;
 }) {
   return (
     <>
@@ -66,5 +62,5 @@ function Panels({
         />
       ))}
     </>
-  )
+  );
 }

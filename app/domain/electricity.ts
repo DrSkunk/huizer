@@ -32,7 +32,12 @@ export interface Differential extends ElectricalComponent {
 const ElectricalComponentSchema = z.object({
   type: z.union([z.literal("fuse"), z.literal("differential")]),
   phase: z.array(
-    z.union([z.literal("L1"), z.literal("L2"), z.literal("L3"), z.literal("N")])
+    z.union([
+      z.literal("L1"),
+      z.literal("L2"),
+      z.literal("L3"),
+      z.literal("N"),
+    ]),
   ),
   rating: z.number().positive(),
   width: z.number().positive(),
@@ -58,7 +63,7 @@ export const ElectricitySchema = z
     {
       message: "Each row can have at most `modulesPerRow` modules.",
       path: ["rows"], // Points to the `rows` field in the error message
-    }
+    },
   );
 
 export const defaultElectricity: Electricity = {

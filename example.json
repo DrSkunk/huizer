@@ -18,13 +18,19 @@
               "position": { "x": 500, "y": 0 },
               "orientation": "vertical",
               "side": "left",
-              "items": [{ "ID": "1", "type": "outlet" }, { "ID": "2", "type": "outlet" }]
+              "items": [
+                { "ID": "1", "type": "outlet" },
+                { "ID": "2", "type": "outlet" }
+              ]
             },
             {
               "position": { "x": 500, "y": 0 },
               "orientation": "vertical",
               "side": "right",
-              "items": [{ "ID": "2", "type": "outlet" }, { "ID": "3", "type": "outlet" }]
+              "items": [
+                { "ID": "2", "type": "outlet" },
+                { "ID": "3", "type": "outlet" }
+              ]
             }
           ]
         },

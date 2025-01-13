@@ -1,11 +1,5 @@
-export function Legend({
-  width,
-  height,
-}: {
-  width: number
-  height: number
-}) {
-  const angle = Math.atan2(height, width) * (180 / Math.PI)
+export function Legend({ width, height }: { width: number; height: number }) {
+  const angle = Math.atan2(height, width) * (180 / Math.PI);
 
   return (
     <>
@@ -46,7 +40,12 @@ export function Legend({
         <text x={width / 2 + 5} y={10} textAnchor="start" fontSize=".6em">
           boven
         </text>
-        <text x={width / 2 - 5} y={height * 2 - 5} textAnchor="end" fontSize=".6em">
+        <text
+          x={width / 2 - 5}
+          y={height * 2 - 5}
+          textAnchor="end"
+          fontSize=".6em"
+        >
           onder
         </text>
         {/* diagonal line top left to bottom right */}
@@ -66,7 +65,11 @@ export function Legend({
           </text>
         </g>
         <g transform={`translate(${5},${height / 2 - 5})`}>
-          <text textAnchor="start" fontSize=".6em" transform={`rotate(${angle})`}>
+          <text
+            textAnchor="start"
+            fontSize=".6em"
+            transform={`rotate(${angle})`}
+          >
             links
           </text>
         </g>
@@ -82,16 +85,24 @@ export function Legend({
           markerEnd="url(#arrow)"
         />
         <g transform={`translate(${10},${height * 1.5 - 10})`}>
-          <text textAnchor="start" fontSize=".6em" transform={`rotate(-${angle})`}>
+          <text
+            textAnchor="start"
+            fontSize=".6em"
+            transform={`rotate(-${angle})`}
+          >
             voor
           </text>
         </g>
         <g transform={`translate(${width - 5},${height / 2 + 15})`}>
-          <text textAnchor="end" fontSize=".6em" transform={`rotate(-${angle})`}>
+          <text
+            textAnchor="end"
+            fontSize=".6em"
+            transform={`rotate(-${angle})`}
+          >
             achter
           </text>
         </g>
       </g>
     </>
-  )
+  );
 }

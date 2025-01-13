@@ -40,7 +40,7 @@ export const GasSchema = z.object({
     z.object({
       type: z.nativeEnum(NodeType),
       label: z.string(),
-    })
+    }),
   ),
   edges: z.array(
     z.object({
@@ -48,7 +48,7 @@ export const GasSchema = z.object({
       to: z.number(),
       distance: z.number().positive(),
       direction: z.nativeEnum(Direction),
-    })
+    }),
   ),
 });
 

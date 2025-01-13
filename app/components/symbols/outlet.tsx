@@ -21,5 +21,5 @@ export function Outlet({ amount }: { amount: number }) {
         </g>
       ))}
     </g>
-  )
+  );
 }

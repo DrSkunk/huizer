@@ -1,28 +1,28 @@
-import { Direction, NodeType } from '~/domain/gas'
-import type { Gas } from '~/domain/gas'
-import { EdgesAndNodes } from './edges-and-nodes'
-import { Grid } from './grid'
-import { Legend } from './legend'
+import { Direction, NodeType } from "~/domain/gas";
+import type { Gas } from "~/domain/gas";
+import { EdgesAndNodes } from "./edges-and-nodes";
+import { Grid } from "./grid";
+import { Legend } from "./legend";
 
 export function Total({ gas }: { gas: Gas }) {
-  const width = 100
-  const height = 50
+  const width = 100;
+  const height = 50;
 
   // const { nodes, edges } = gas
 
   const nodes = [
-    { type: NodeType.METER, label: '' }, // 0 (No label)
-    { type: NodeType.MEASURE, label: 'A' }, // 1 - A
-    { type: NodeType.JUNCTION, label: 'B' }, // 2 - B
-    { type: NodeType.JUNCTION, label: 'C' }, // 3 - C
-    { type: NodeType.WALL, label: 'D' }, // 4 - D
-    { type: NodeType.JUNCTION, label: 'E' }, // 5 - E
-    { type: NodeType.JUNCTION, label: 'F' }, // 6 - F
-    { type: NodeType.JUNCTION, label: 'G' }, // 7 - G
-    { type: NodeType.JUNCTION, label: 'H' }, // 8 - H
-    { type: NodeType.VALVE, label: 'I' }, // 9 - I
-    { type: NodeType.BOILER, label: '' }, // 10 (No label)
-  ]
+    { type: NodeType.METER, label: "" }, // 0 (No label)
+    { type: NodeType.MEASURE, label: "A" }, // 1 - A
+    { type: NodeType.JUNCTION, label: "B" }, // 2 - B
+    { type: NodeType.JUNCTION, label: "C" }, // 3 - C
+    { type: NodeType.WALL, label: "D" }, // 4 - D
+    { type: NodeType.JUNCTION, label: "E" }, // 5 - E
+    { type: NodeType.JUNCTION, label: "F" }, // 6 - F
+    { type: NodeType.JUNCTION, label: "G" }, // 7 - G
+    { type: NodeType.JUNCTION, label: "H" }, // 8 - H
+    { type: NodeType.VALVE, label: "I" }, // 9 - I
+    { type: NodeType.BOILER, label: "" }, // 10 (No label)
+  ];
 
   const edges = [
     { from: 0, to: 1, distance: 0, direction: Direction.LEFT }, // 0 to A
@@ -35,7 +35,7 @@ export function Total({ gas }: { gas: Gas }) {
     { from: 7, to: 8, distance: 30, direction: Direction.FRONT }, // G to H
     { from: 8, to: 9, distance: 50, direction: Direction.UP }, // H to I
     { from: 9, to: 10, distance: 0, direction: Direction.UP }, // I to boiler
-  ]
+  ];
 
   const nodesManifest = nodes
     .filter(
@@ -46,31 +46,31 @@ export function Total({ gas }: { gas: Gas }) {
     )
     .map((node) => {
       if (node.type === NodeType.MEASURE) {
-        return `${node.label}: Meetnippel staal 1"`
+        return `${node.label}: Meetnippel staal 1"`;
       }
       if (node.type === NodeType.WALL) {
-        return `${node.label}: Muur 18cm`
+        return `${node.label}: Muur 18cm`;
       }
       if (node.type === NodeType.VALVE) {
-        return `${node.label}: Gaskraan 3/4"`
+        return `${node.label}: Gaskraan 3/4"`;
       }
-    })
+    });
 
   const edgesManifest = edges
     .filter((edge) => edge.distance > 0)
     .map((edge) => {
-      const from = nodes[edge.from]
-      const to = nodes[edge.to]
+      const from = nodes[edge.from];
+      const to = nodes[edge.to];
       // make 450 resolve to 4,5m and 50 to 0.5m
-      const distance = edge.distance / 100
+      const distance = edge.distance / 100;
 
-      return `${from.label}${to.label}: ${distance}m PLT DN25 Gasflexibel`
-    })
+      return `${from.label}${to.label}: ${distance}m PLT DN25 Gasflexibel`;
+    });
 
   const startCoordinates = {
     x: 7 * width,
     y: 10 * height,
-  }
+  };
 
   return (
     <div
@@ -80,7 +80,7 @@ export function Total({ gas }: { gas: Gas }) {
         height: height * 16,
       }}
     >
-      <div className="absolute top-0 right-0 z-10 flex flex-col border bg-white px-2 py-1 font-mono">
+      <div className="absolute right-0 top-0 z-10 flex flex-col border bg-white px-2 py-1 font-mono">
         {nodesManifest.map((node) => (
           <div key={node} className="text-xs">
             {node}
@@ -110,5 +110,5 @@ export function Total({ gas }: { gas: Gas }) {
         />
       </svg>
     </div>
-  )
+  );
 }

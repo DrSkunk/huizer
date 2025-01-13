@@ -1,27 +1,32 @@
-import type { ElectricalComponent, Electricity, Fuse } from '~/domain/electricity'
+import type {
+  ElectricalComponent,
+  Electricity,
+  Fuse,
+} from "~/domain/electricity";
 
-const LABEL_TOP_HEIGHT = 30
-const PHASE_LABEL_HEIGHT = 20
-const DESCRIPTION_HEIGHT = 20
-const VERTICAL_SPACING = 20
-const CELL_WIDTH = 50
-const CELL_HEIGHT = 80
+const LABEL_TOP_HEIGHT = 30;
+const PHASE_LABEL_HEIGHT = 20;
+const DESCRIPTION_HEIGHT = 20;
+const VERTICAL_SPACING = 20;
+const CELL_WIDTH = 50;
+const CELL_HEIGHT = 80;
 
 const ROW_HEIGHT =
-  LABEL_TOP_HEIGHT + CELL_HEIGHT + PHASE_LABEL_HEIGHT + DESCRIPTION_HEIGHT
+  LABEL_TOP_HEIGHT + CELL_HEIGHT + PHASE_LABEL_HEIGHT + DESCRIPTION_HEIGHT;
 
 export function Total({ electricity }: { electricity: Electricity }) {
-  const { configuration, rows } = electricity
+  const { configuration, rows } = electricity;
   if (!configuration || !rows || rows.length === 0) {
     return (
       <div className="text-red-500">
         Error: Invalid or missing data for the Electrical Panel
       </div>
-    )
+    );
   }
 
-  const svgWidth = configuration.modulesPerRow * CELL_WIDTH
-  const svgHeight = rows.length * ROW_HEIGHT + (rows.length - 1) * VERTICAL_SPACING
+  const svgWidth = configuration.modulesPerRow * CELL_WIDTH;
+  const svgHeight =
+    rows.length * ROW_HEIGHT + (rows.length - 1) * VERTICAL_SPACING;
 
   return (
     <svg
@@ -41,34 +46,35 @@ export function Total({ electricity }: { electricity: Electricity }) {
         </g>
       ))}
     </svg>
-  )
+  );
 }
 
-function Components({
-  row,
-}: {
-  row: ElectricalComponent[]
-}) {
+function Components({ row }: { row: ElectricalComponent[] }) {
   const offsets = row.map((_, indexComponent) => {
     return row
       .slice(0, indexComponent)
-      .reduce((acc, component) => acc + component.width * CELL_WIDTH, 0)
-  })
+      .reduce((acc, component) => acc + component.width * CELL_WIDTH, 0);
+  });
 
   return (
     <>
       {row.map((component, indexComponent) => (
-        <g key={indexComponent} transform={`translate(${offsets[indexComponent]},0)`}>
+        <g
+          key={indexComponent}
+          transform={`translate(${offsets[indexComponent]},0)`}
+        >
           <Component component={component} />
         </g>
       ))}
       {row.length < 18 && (
-        <g transform={`translate(${offsets.at(-1) + row.at(-1).width * CELL_WIDTH})`}>
+        <g
+          transform={`translate(${offsets.at(-1) + row.at(-1).width * CELL_WIDTH})`}
+        >
           <Blank width={18 - row.length} />
         </g>
       )}
     </>
-  )
+  );
 }
 
 function Blank({ width }: { width: number }) {
@@ -81,14 +87,14 @@ function Blank({ width }: { width: number }) {
       stroke="black"
       strokeWidth={1}
     />
-  )
+  );
 }
 
 function Component({ component }: { component: ElectricalComponent }) {
   const child = {
     fuse: <FuseComponent fuse={component as Fuse} />,
     differential: <DifferentialComponent component={component} />,
-  }
+  };
   return (
     <g>
       <CenterText
@@ -136,11 +142,11 @@ function Component({ component }: { component: ElectricalComponent }) {
         {component.description}
       </CenterText>
     </g>
-  )
+  );
 }
 
 function FuseComponent({ fuse }: { fuse: Fuse }) {
-  const { width } = fuse
+  const { width } = fuse;
 
   return (
     <g>
@@ -184,17 +190,21 @@ function FuseComponent({ fuse }: { fuse: Fuse }) {
         </g>
       ))}
     </g>
-  )
+  );
 }
 
-function DifferentialComponent({ component }: { component: ElectricalComponent }) {
+function DifferentialComponent({
+  component,
+}: {
+  component: ElectricalComponent;
+}) {
   return (
     <g>
       <CenterText width={CELL_WIDTH * component.width} height={CELL_HEIGHT}>
         {component.rating}mA
       </CenterText>
     </g>
-  )
+  );
 }
 
 function CenterText({
@@ -202,21 +212,21 @@ function CenterText({
   y = 0,
   width,
   height,
-  fill = 'none',
-  stroke = 'none',
+  fill = "none",
+  stroke = "none",
   strokeWidth = 0,
   fontSize = 15,
   children,
 }: {
-  x?: number
-  y?: number
-  width: number
-  height: number
-  fill?: string
-  stroke?: string
-  strokeWidth?: number
-  fontSize?: number
-  children: React.ReactNode
+  x?: number;
+  y?: number;
+  width: number;
+  height: number;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+  fontSize?: number;
+  children: React.ReactNode;
 }) {
   return (
     <g>
@@ -239,5 +249,5 @@ function CenterText({
         {children}
       </text>
     </g>
-  )
+  );
 }
